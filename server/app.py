@@ -23,23 +23,43 @@ def home():
 
 @app.route('/products')
 def products():
-    pass
+    products = []
+    for product in Products.query.all():
+        product_dict = product.to_dict()
+        products.append(product_dict)
+    response = make_response(jsonify(products), 200)
+    return response
+        
 
 @app.route('/products/<int:id>')
-def product_id():
-    pass
+def product_id(id):
+    product = Products.query.filter_by(id=id).first()
+    product_dict = product.to_dict()
+    response = make_response(jsonify(product_dict), 200)
+    return response
 
 @app.route('/customers')
 def customers():
-    pass
+    customers = []
+    for customer in Customers.query.all():
+        customers.append(customer.to_dict())
+    response = make_response(jsonify(customers), 200)
+    return response   
 
 @app.route('/customers/<int:id>')
-def customer_id():
-    pass
+def customer_id(id):
+    customer_id = Customers.query.filter_by(id=id).first()
+    customer_dict = customer_id.to_dict()
+    response = make_response(jsonify(customer_dict), 200)
+    return response
 
 @app.route('/reviews')
 def reviews():
-    pass
+    reviews = []
+    for review in Reviews.query.all():
+        reviews.append(review.to_dict())
+    response = make_response(jsonify(reviews), 200)
+    return response   
 
 
 if __name__=="__main__":

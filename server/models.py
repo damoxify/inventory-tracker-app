@@ -25,6 +25,8 @@ class Customers(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String)
+    address = db.Column(db.String)
+    birthdate = db.Column(db.String)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
 
 
