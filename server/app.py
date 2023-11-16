@@ -21,5 +21,26 @@ def home():
     return "<h1>Welcome to the Inventory Tracker Application</h1>"
 
 
+@app.route('/products')
+def products():
+    pass
+
+@app.route('/products/<int:id>')
+def product_id():
+    pass
+
+@app.route('/customers')
+def customers():
+    pass
+
+@app.route('/customers/<int:id>')
+def customer_id():
+    pass
+
+@app.route('/reviews')
+def reviews():
+    pass
+
+
 if __name__=="__main__":
     app.run(port=5555)
