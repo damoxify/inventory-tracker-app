@@ -1,9 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import Login from './Login'
 
-const Home = () => {
+function Home() {
+    useEffect(()=> {
+        fetch('/')
+        .then((res)=> res.json())
+        .then((data)=> console.log(data))
+    }, [])
   return (
     <div>
-      
+      <Login/>
     </div>
   )
 }
