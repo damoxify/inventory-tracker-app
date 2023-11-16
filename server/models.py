@@ -13,7 +13,7 @@ db = SQLAlchemy(metadata=metadata)
 class Products(db.Model, SerializerMixin):
     __tablename__ = 'products'
 
-    id = db.Column(db.Integer, Primary_Key = True)
+    id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String)
     description = db.Column(db.String)
     price = db.Column(db.Integer)
@@ -23,7 +23,7 @@ class Products(db.Model, SerializerMixin):
 class Customers(db.Model, SerializerMixin):
     __tablename__ = 'customers'
 
-    id = db.Column(db.Integer, Primary_Key = True)
+    id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
 
@@ -32,7 +32,7 @@ class Customers(db.Model, SerializerMixin):
 class Reviews(db.Model, SerializerMixin):
     __tablename__ = 'reviews'
 
-    id = db.Column(db.Integer, Primary_Key = True)
+    id = db.Column(db.Integer, primary_key = True)
     customer_id = db.Column(db.Integer)
     body = db.Column(db.String)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
