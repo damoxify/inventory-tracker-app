@@ -34,7 +34,7 @@ def products():
     elif request.method == 'POST':
 
         new_product = Products(
-            name=request.form.get('name'),
+            product_name=request.form.get('product_name'),
             description=request.form.get('description'),
             price=request.form.get('price'))
         
@@ -99,7 +99,7 @@ def customers():
     elif request.method == 'POST':
 
         new_customer = Customers(
-            name = request.form.get("name"),
+            customer_name = request.form.get("customer_name"),
             address = request.form.get("address"),
             birthdate = request.form.get("birthdate")
         )
@@ -120,26 +120,33 @@ def customer_id(id):
     response = make_response(jsonify(customer_dict), 200)
     return response
 
-@app.route('/reviews', methods=['GET','PATCH'])
-
+@app.route('/reviews')
 def reviews():
+    reviews = []
+    for review in Reviews.query.all():
+        reviews.append(review.to_dict())
+    response = make_response(jsonify(reviews), 200)
+    return response   
+
+@app.route('/reviews/<int:id>', methods=['GET','PATCH'])
+def reviews_id(id):
+    reviews_id = Reviews.query.filter_by(id=id).first()
+
     if request.method == 'GET':
-
-        reviews = []
-        for review in Reviews.query.all():
-            reviews.append(review.to_dict())
-        response = make_response(jsonify(reviews), 200)
-        return response   
-
+        review_dict = reviews_id.to_dict()
+        response = make_response(review_dict, 200)
+        return response
+    
     elif request.method == 'PATCH':
+        
         for attr in request.form:
-            setattr(review, attr, request.form.get(attr))
-            db.session.add(review)
+            setattr(reviews_id, attr, request.form.get(attr))
+            db.session.add(reviews_id)
             db.session.commit()
 
-            rev_dict = review.to_dict()
-            response = make_response(rev_dict, 200)
-            return response
+            rev_dict = reviews_id.to_dict()
+        response = make_response(rev_dict, 200)
+        return response
 
 
         

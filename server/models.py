@@ -14,7 +14,7 @@ class Products(db.Model, SerializerMixin):
     __tablename__ = 'products'
 
     id = db.Column(db.Integer, primary_key = True)
-    name = db.Column(db.String, nullable=False)
+    product_name = db.Column(db.String, unique=True)
     description = db.Column(db.String)
     price = db.Column(db.Integer)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
@@ -24,7 +24,7 @@ class Customers(db.Model, SerializerMixin):
     __tablename__ = 'customers'
 
     id = db.Column(db.Integer, primary_key = True)
-    name = db.Column(db.String)
+    customer_name = db.Column(db.String, unique=True)
     address = db.Column(db.String)
     birthdate = db.Column(db.String)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
