@@ -1,20 +1,23 @@
-import { Route, Switch } from "react-router";
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import NavBar from './components/NavBar';
+import Login from './components/Login';
 import Home from './components/Home';
-import NavBar from "./components/NavBar";
+import Products from './components/Products';
+import Signup from './components/Signup';
+import Customers from './components/Customers';
 
 function App() {
   return (
     <>
-    <NavBar/>
-    <Switch>
-      <Route>
-      <Home exact path="/"/>
-    <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
-      </Route>
-    </Switch>
-    
+      <NavBar />
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/customers" element={<Customers />} />
+      </Routes>
     </>
   );
 }

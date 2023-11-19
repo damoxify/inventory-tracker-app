@@ -21,30 +21,97 @@ def home():
     return "<h1>Welcome to the Inventory Tracker Application</h1>"
 
 
-@app.route('/products')
+@app.route('/products', methods=['GET', 'POST'])
 def products():
-    products = []
-    for product in Products.query.all():
-        product_dict = product.to_dict()
-        products.append(product_dict)
-    response = make_response(jsonify(products), 200)
-    return response
+    if request.method == 'GET':
+        products = []
+        for product in Products.query.all():
+            product_dict = product.to_dict()
+            products.append(product_dict)
+        response = make_response(jsonify(products), 200)
+        return response
+    
+    elif request.method == 'POST':
+
+        new_product = Products(
+            name=request.form.get('name'),
+            description=request.form.get('description'),
+            price=request.form.get('price'))
+        
+        db.session.add(new_product)
+        db.session.commit()
+        new_product_dict = new_product.to_dict()
+        response = make_response(jsonify(new_product_dict), 201)
+        return response
+
         
 
-@app.route('/products/<int:id>')
+@app.route('/products/<int:id>', methods=['GET', 'PATCH', 'PUT', 'DELETE'])
 def product_id(id):
-    product = Products.query.filter_by(id=id).first()
-    product_dict = product.to_dict()
-    response = make_response(jsonify(product_dict), 200)
-    return response
+    products = Products.query.get(id)
 
-@app.route('/customers')
+    if request.method == 'GET':
+        product_dict = products.to_dict()
+        response = make_response(jsonify(product_dict), 200)
+        return response
+    
+    elif request.method == 'PATCH':
+        for attr in request.form:
+            setattr(products, attr, request.form.get(attr))
+            db.session.add(products)
+            db.session.commit()
+            product_dict = products.to_dict()
+            response = make_response(jsonify(product_dict, 201))
+            return response
+
+    elif request.method == 'PUT':
+        for attr in request.form:
+            setattr(products, attr, request.form.get(attr))
+            db.session.add(products)
+            db.session.commit()
+            product_dict = products.to_dict()
+            response = make_response(jsonify(product_dict, 201))
+            return response
+
+    elif request.method == 'DELETE':
+        db.session.delete(products)
+        db.session.commit()
+
+        response_body = {
+            "deleted successfully" : True,
+            "message" : "product deleted"
+        }
+
+        response = make_response(jsonify(response_body), 200)
+        return response
+
+
+@app.route('/customers', methods=['GET','POST'])
 def customers():
-    customers = []
-    for customer in Customers.query.all():
-        customers.append(customer.to_dict())
-    response = make_response(jsonify(customers), 200)
-    return response   
+    if request.method == 'GET':
+
+        customers = []
+        for customer in Customers.query.all():
+            customers.append(customer.to_dict())
+        response = make_response(jsonify(customers), 200)
+        return response   
+
+    elif request.method == 'POST':
+
+        new_customer = Customers(
+            name = request.form.get("name"),
+            address = request.form.get("address"),
+            birthdate = request.form.get("birthdate")
+        )
+
+        db.session.add(new_customer)
+        db.session.commit()
+
+        new_customer_dict = new_customer.to_dict()
+        response = make_response(jsonify(new_customer_dict), 201)
+        return response
+
+
 
 @app.route('/customers/<int:id>')
 def customer_id(id):
@@ -53,13 +120,30 @@ def customer_id(id):
     response = make_response(jsonify(customer_dict), 200)
     return response
 
-@app.route('/reviews')
+@app.route('/reviews', methods=['GET','PATCH'])
+
 def reviews():
-    reviews = []
-    for review in Reviews.query.all():
-        reviews.append(review.to_dict())
-    response = make_response(jsonify(reviews), 200)
-    return response   
+    if request.method == 'GET':
+
+        reviews = []
+        for review in Reviews.query.all():
+            reviews.append(review.to_dict())
+        response = make_response(jsonify(reviews), 200)
+        return response   
+
+    elif request.method == 'PATCH':
+        for attr in request.form:
+            setattr(review, attr, request.form.get(attr))
+            db.session.add(review)
+            db.session.commit()
+
+            rev_dict = review.to_dict()
+            response = make_response(rev_dict, 200)
+            return response
+
+
+        
+
 
 
 if __name__=="__main__":
