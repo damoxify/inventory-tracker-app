@@ -8,7 +8,7 @@ function NavBar() {
       <div className="container mx-auto flex items-center justify-between">
         <div>
           <Link to="/" className="flex items-center space-x-2">
-            <img src={logo} alt='The logo of the inventory' className="h-12 w-12" />
+            <img src={logo} alt='The logo of the inventory' className="h-20 w-17" />
             <div>
               <h1 className="text-xl font-bold">Inventory App</h1>
               <p className="text-sm">Created by Damola at Moringa School</p>

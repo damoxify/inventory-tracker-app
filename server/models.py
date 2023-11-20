@@ -1,6 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import MetaData
-from sqlalchemy import ForeignKey
+from sqlalchemy import MetaData, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy_serializer import SerializerMixin
 
@@ -10,31 +9,62 @@ metadata = MetaData(naming_convention={
 
 db = SQLAlchemy(metadata=metadata)
 
-class Products(db.Model, SerializerMixin):
+class Product(db.Model, SerializerMixin):
     __tablename__ = 'products'
 
-    id = db.Column(db.Integer, primary_key = True)
+    id = db.Column(db.Integer, primary_key=True)
     product_name = db.Column(db.String, unique=True)
     description = db.Column(db.String)
     price = db.Column(db.Integer)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
+    customer_id = db.Column(db.Integer, db.ForeignKey('customers.id'))
 
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'product_name': self.product_name,
+            'description': self.description,
+            'price': self.price,
+            'customer_id': self.customer_id,
+        }
 
-class Customers(db.Model, SerializerMixin):
+class Customer(db.Model, SerializerMixin):
     __tablename__ = 'customers'
 
-    id = db.Column(db.Integer, primary_key = True)
+    serialize_rules = ('-Customer.products.customer', '-Customer.reviews.customer')
+
+    id = db.Column(db.Integer, primary_key=True)
     customer_name = db.Column(db.String, unique=True)
     address = db.Column(db.String)
-    birthdate = db.Column(db.String)
+    join_date = db.Column(db.String)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
 
+    products = db.relationship('Product', backref='customer')
+    reviews = db.relationship('Review', backref='customer')
 
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'customer_name': self.customer_name,
+            'address': self.address,
+            'join_date': self.join_date,
+            'products': [product.to_dict() for product in self.products],
+            'reviews': [review.to_dict() for review in self.reviews],
+        }
 
-class Reviews(db.Model, SerializerMixin):
+class Review(db.Model, SerializerMixin):
     __tablename__ = 'reviews'
 
-    id = db.Column(db.Integer, primary_key = True)
-    customer_id = db.Column(db.Integer)
+    id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
+    customer_id = db.Column(db.Integer, db.ForeignKey('customers.id'))
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'body': self.body,
+            'customer_id': self.customer_id,
+        }
+
+

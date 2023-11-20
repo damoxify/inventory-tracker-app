@@ -15,15 +15,57 @@ function Products() {
 
         const data = await response.json();
         setProducts(data);
-        setError(null); // Clear any previous errors
+        setError(null);
       } catch (error) {
-        setError('Error fetching data. Please try again.'); // Set an error message
+        setError('Error fetching data. Please try again.');
         console.error('Error fetching data:', error);
       }
     };
 
     fetchData();
-  }, []); // Empty dependency array ensures this runs once when the component mounts
+  }, []);
+
+  const handlePatch = async (productId, updatedData) => {
+    try {
+      const response = await fetch(`/products/${productId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedData),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const updatedProducts = products.map((product) =>
+        product.id === productId ? { ...product, ...updatedData } : product
+      );
+
+      setProducts(updatedProducts);
+    } catch (error) {
+      console.error('Error updating product:', error);
+    }
+  };
+
+  const handleDelete = async (productId) => {
+    try {
+      const response = await fetch(`/products/${productId}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const updatedProducts = products.filter((product) => product.id !== productId);
+
+      setProducts(updatedProducts);
+    } catch (error) {
+      console.error('Error deleting product:', error);
+    }
+  };
 
   return (
     <div className="max-w-2xl mx-auto">
@@ -37,6 +79,8 @@ function Products() {
               <th className="py-2 px-4 border-b">Name</th>
               <th className="py-2 px-4 border-b">Description</th>
               <th className="py-2 px-4 border-b">Price</th>
+              <th className="py-2 px-4 border-b">Customer ID</th>
+              <th className="py-2 px-4 border-b">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -45,6 +89,21 @@ function Products() {
                 <td className="py-2 px-4 border-b">{product.product_name}</td>
                 <td className="py-2 px-4 border-b">{product.description}</td>
                 <td className="py-2 px-4 border-b">{product.price}</td>
+                <td className="py-2 px-4 border-b">{product.customer_id}</td>
+                <td className="py-2 px-4 border-b">
+                  <button
+                    onClick={() => {
+                      const updatedData = {
+                        // Specify the fields you want to update
+                        description: 'Updated Description',
+                      };
+                      handlePatch(product.id, updatedData);
+                    }}
+                  >
+                    Edit
+                  </button>
+                  <button onClick={() => handleDelete(product.id)}>Delete</button>
+                </td>
               </tr>
             ))}
           </tbody>

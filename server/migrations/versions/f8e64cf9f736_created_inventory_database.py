@@ -1,8 +1,8 @@
-"""creating a new table
+"""created inventory database
 
-Revision ID: 19af45d28593
+Revision ID: f8e64cf9f736
 Revises: 
-Create Date: 2023-11-19 22:57:28.869567
+Create Date: 2023-11-20 19:37:39.984575
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '19af45d28593'
+revision = 'f8e64cf9f736'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -22,7 +22,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('customer_name', sa.String(), nullable=True),
     sa.Column('address', sa.String(), nullable=True),
-    sa.Column('birthdate', sa.String(), nullable=True),
+    sa.Column('join_date', sa.String(), nullable=True),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('customer_name')
@@ -33,14 +33,17 @@ def upgrade():
     sa.Column('description', sa.String(), nullable=True),
     sa.Column('price', sa.Integer(), nullable=True),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
+    sa.Column('customer_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['customer_id'], ['customers.id'], name=op.f('fk_products_customer_id_customers')),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('product_name')
     )
     op.create_table('reviews',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('customer_id', sa.Integer(), nullable=True),
     sa.Column('body', sa.String(), nullable=True),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
+    sa.Column('customer_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['customer_id'], ['customers.id'], name=op.f('fk_reviews_customer_id_customers')),
     sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###

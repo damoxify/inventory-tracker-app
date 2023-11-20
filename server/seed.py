@@ -5,7 +5,7 @@ from random import choice as rc, randint
 from faker import Faker
 
 from app import app
-from models import db, Products, Customers, Reviews
+from models import db, Product, Customer, Review
 
 
 product_data = [
@@ -52,33 +52,35 @@ fake = Faker()
 
 def inventory():
 
-    Products.query.delete()
-    Customers.query.delete()
-    Reviews.query.delete()
+    Customer.query.delete()
+    Product.query.delete()
+    Review.query.delete()
     
-    products = []    
+ 
+    Customers = []
+    for i in range(50):
+        customer_details = Customer(customer_name=fake.name(), address=fake.address(), join_date=fake.date())
+        Customers.append(customer_details)
+    db.session.add_all(Customers)
+    db.session.commit()
+    
+    Products = []    
     for product_properties in product_data:
-        product_details = Products(product_name=product_properties["product_name"], description=product_properties["description"], price=f"${randint(5, 60)}")
-        products.append(product_details)
-    db.session.add_all(products)
+            
+        product_details = Product(product_name=product_properties["product_name"], description=product_properties["description"], price=f"${randint(5, 60)}", customer_id =rc(Customers).id)
+        Products.append(product_details)
+    db.session.add_all(Products)
     db.session.commit()
         
 
-    customers = []
+    Reviews = []
     for i in range(50):
-        customer_details = Customers(customer_name=fake.name(), address=fake.address(), birthdate=fake.date())
-        customers.append(customer_details)
-    db.session.add_all(customers)
-    db.session.commit()
-        
-    reviews = []
-    for i in range(50):
-        review_details = Reviews(
+        review_details = Review(
             body=rc(review_body),
-            customer_id =rc(customers).id,
+            customer_id =rc(Customers).id,
             )
-        reviews.append(review_details)
-    db.session.add_all(reviews)
+        Reviews.append(review_details)
+    db.session.add_all(Reviews)
     db.session.commit()
         
 

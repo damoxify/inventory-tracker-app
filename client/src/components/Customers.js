@@ -109,7 +109,7 @@ function Customers() {
             <tr key={index}>
               <td className="py-2 px-4 border-b">{customer.customer_name}</td>
               <td className="py-2 px-4 border-b">{customer.address}</td>
-              <td className="py-2 px-4 border-b">{customer.birthdate}</td>
+              <td className="py-2 px-4 border-b">{customer.join_date}</td>
             </tr>
           ))}
         </tbody>

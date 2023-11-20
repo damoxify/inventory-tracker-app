@@ -2,10 +2,9 @@ from flask import Flask, make_response, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from flask_migrate import Migrate
+from models import db, Product, Customer, Review
 
-from models import db, Products, Customers, Reviews
-
-app=Flask(__name__)
+app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///inventory.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -24,134 +23,101 @@ def home():
 @app.route('/products', methods=['GET', 'POST'])
 def products():
     if request.method == 'GET':
-        products = []
-        for product in Products.query.all():
-            product_dict = product.to_dict()
-            products.append(product_dict)
-        response = make_response(jsonify(products), 200)
-        return response
+        products_list = [product.to_dict() for product in Product.query.all()]
+        return jsonify(products_list), 200
     
     elif request.method == 'POST':
-
-        new_product = Products(
+        new_product = Product(
             product_name=request.form.get('product_name'),
             description=request.form.get('description'),
-            price=request.form.get('price'))
+            price=request.form.get('price'),
+            customer_id=request.form.get('customer_id')
+        )
         
         db.session.add(new_product)
         db.session.commit()
-        new_product_dict = new_product.to_dict()
-        response = make_response(jsonify(new_product_dict), 201)
-        return response
-
         
+        new_product_dict = new_product.to_dict()
+        return jsonify(new_product_dict), 201
+
 
 @app.route('/products/<int:id>', methods=['GET', 'PATCH', 'PUT', 'DELETE'])
-def product_id(id):
-    products = Products.query.get(id)
+def products_id(id):
+    product = Product.query.get_or_404(id)
 
     if request.method == 'GET':
-        product_dict = products.to_dict()
-        response = make_response(jsonify(product_dict), 200)
-        return response
+        product_dict = product.to_dict()
+        return jsonify(product_dict), 200
     
-    elif request.method == 'PATCH':
+    elif request.method in ['PATCH', 'PUT']:
         for attr in request.form:
-            setattr(products, attr, request.form.get(attr))
-            db.session.add(products)
-            db.session.commit()
-            product_dict = products.to_dict()
-            response = make_response(jsonify(product_dict, 201))
-            return response
-
-    elif request.method == 'PUT':
-        for attr in request.form:
-            setattr(products, attr, request.form.get(attr))
-            db.session.add(products)
-            db.session.commit()
-            product_dict = products.to_dict()
-            response = make_response(jsonify(product_dict, 201))
-            return response
+            setattr(product, attr, request.form.get(attr))
+        
+        db.session.commit()
+        product_dict = product.to_dict()
+        return jsonify(product_dict), 200
 
     elif request.method == 'DELETE':
-        db.session.delete(products)
+        db.session.delete(product)
         db.session.commit()
 
         response_body = {
-            "deleted successfully" : True,
-            "message" : "product deleted"
+            "deleted successfully": True,
+            "message": "product deleted"
         }
 
-        response = make_response(jsonify(response_body), 200)
-        return response
+        return jsonify(response_body), 200
 
 
-@app.route('/customers', methods=['GET','POST'])
+@app.route('/customers', methods=['GET', 'POST'])
 def customers():
     if request.method == 'GET':
-
-        customers = []
-        for customer in Customers.query.all():
-            customers.append(customer.to_dict())
-        response = make_response(jsonify(customers), 200)
-        return response   
+        customers_list = [customer.to_dict() for customer in Customer.query.all()]
+        return jsonify(customers_list), 200   
 
     elif request.method == 'POST':
-
-        new_customer = Customers(
-            customer_name = request.form.get("customer_name"),
-            address = request.form.get("address"),
-            birthdate = request.form.get("birthdate")
+        new_customer = Customer(
+            customer_name=request.form.get("customer_name"),
+            address=request.form.get("address"),
+            join_date=request.form.get("join_date")
         )
 
         db.session.add(new_customer)
         db.session.commit()
 
         new_customer_dict = new_customer.to_dict()
-        response = make_response(jsonify(new_customer_dict), 201)
-        return response
-
+        return jsonify(new_customer_dict), 201
 
 
 @app.route('/customers/<int:id>')
-def customer_id(id):
-    customer_id = Customers.query.filter_by(id=id).first()
-    customer_dict = customer_id.to_dict()
-    response = make_response(jsonify(customer_dict), 200)
-    return response
+def customers_id(id):
+    customer = Customer.query.get_or_404(id)
+    customer_dict = customer.to_dict()
+    return jsonify(customer_dict), 200
+
 
 @app.route('/reviews')
 def reviews():
-    reviews = []
-    for review in Reviews.query.all():
-        reviews.append(review.to_dict())
-    response = make_response(jsonify(reviews), 200)
-    return response   
+    reviews_list = [review.to_dict() for review in Review.query.all()]
+    return jsonify(reviews_list), 200
 
-@app.route('/reviews/<int:id>', methods=['GET','PATCH'])
+
+@app.route('/reviews/<int:id>', methods=['GET', 'PATCH'])
 def reviews_id(id):
-    reviews_id = Reviews.query.filter_by(id=id).first()
+    review = Review.query.get_or_404(id)
 
     if request.method == 'GET':
-        review_dict = reviews_id.to_dict()
-        response = make_response(review_dict, 200)
-        return response
+        review_dict = review.to_dict()
+        return jsonify(review_dict), 200
     
     elif request.method == 'PATCH':
-        
         for attr in request.form:
-            setattr(reviews_id, attr, request.form.get(attr))
-            db.session.add(reviews_id)
-            db.session.commit()
-
-            rev_dict = reviews_id.to_dict()
-        response = make_response(rev_dict, 200)
-        return response
-
-
+            setattr(review, attr, request.form.get(attr))
         
+        db.session.commit()
+        rev_dict = review.to_dict()
+        return jsonify(rev_dict), 200
 
 
-
-if __name__=="__main__":
+if __name__ == "__main__":
     app.run(port=5555)
