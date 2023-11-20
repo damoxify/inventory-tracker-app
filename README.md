@@ -46,16 +46,16 @@ The Inventory Tracker App is a full-stack application designed to help businesse
    cd inventory-tracker-app
    ```
 
-3. Install dependencies for both frontend and backend:
+3. Install dependencies for both client and server:
 
    ```bash
    # Frontend (React)
-   cd frontend
+   cd client
    npm install
 
    # Backend (Flask)
-   cd ../backend
-   pip install 
+   cd server
+   pipenv install 
    ```
 
 ## Usage
@@ -63,14 +63,14 @@ The Inventory Tracker App is a full-stack application designed to help businesse
 1. Start the Flask backend server:
 
    ```bash
-   # Inside the backend folder
+   # Inside the server folder
    flask run
    ```
 
 2. Start the React frontend server:
 
    ```bash
-   # Inside the frontend folder
+   # Inside the client folder
    npm start
    ```
 
