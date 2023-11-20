@@ -42,7 +42,7 @@ function Products() {
           <tbody>
             {products.map((product) => (
               <tr key={product.id}>
-                <td className="py-2 px-4 border-b">{product.name}</td>
+                <td className="py-2 px-4 border-b">{product.product_name}</td>
                 <td className="py-2 px-4 border-b">{product.description}</td>
                 <td className="py-2 px-4 border-b">{product.price}</td>
               </tr>

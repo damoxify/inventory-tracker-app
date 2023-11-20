@@ -11,18 +11,17 @@ function Login() {
 
   function handleClick() {
     console.log("I am clicked");
-
     navigate('/products');
   }
 
   return (
-    <div className='min-h-screen flex items-center justify-center '>
+    <div className='min-h-screen flex items-center justify-center'>
       <form onSubmit={handleSubmit} className='bg-black p-8 rounded-md shadow-md max-w-md w-full'>
         <h1 className="text-4xl mb-6 text-center text-purple-700 font-bold">Sign in</h1>
         <div className='mb-4'>
           <label className='block text-sm text-white mb-2'>Username</label>
           <input
-            className='w-full p-2 border border-purple-400 rounded-md focus:outline-none focus:border-purple-600'
+            className='w-full p-2 border border-purple-400 rounded-md text-black focus:outline-none focus:border-purple-600 focus:ring focus:ring-purple-300'
             placeholder='Enter your username...'
             type='text'
             required
@@ -31,7 +30,7 @@ function Login() {
         <div className='mb-4'>
           <label className='block text-sm text-white mb-2'>Password</label>
           <input
-            className='w-full p-2 border border-purple-400 rounded-md focus:outline-none focus:border-purple-600'
+            className='w-full p-2 border border-purple-400 rounded-md text-black focus:outline-none focus:border-purple-600 focus:ring focus:ring-purple-300'
             placeholder='Enter your password...'
             type='password'
             required

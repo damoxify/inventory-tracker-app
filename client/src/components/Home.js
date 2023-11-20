@@ -1,47 +1,50 @@
 import React from 'react';
 import Login from './Login';
 import Signup from './Signup';
-import inventorybg from '../components/inventorybg.png';
 
 function Home() {
   return (
-    <section className="justify-center bg-no-repeat bg-cover bg-center rounded-lg">
-      <div className="relative bg-black">
-        <div className="min-h-screen">
-          {/* Header */}
-          <header className="bg-purple-600 text-black py-4">
-            <div className="container mx-auto text-center">
-              <h1 className="text-4xl font-bold">Inventory Tracker</h1>
-            </div>
-          </header>
+    <section className="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 bg-cover bg-center rounded-lg">
+      <div className="relative bg-black bg-opacity-80 min-h-screen text-white">
 
-          {/* Main Content */}
-          <div className="container mx-auto mt-8 p-4">
-            <div
-              className="justify-center bg-repeat bg-center p-8 rounded-md shadow-md"
-              style={{
-                backgroundImage: `url(${inventorybg})`,
-                backgroundColor: 'rgba(255, 255, 255, 1)'
-              }}
-            >
-              {/* Welcome Section */}
-              <div className="text-center mb-8">
-                <h2 className="text-2xl font-bold text-purple-700 mb-2">Welcome to Inventory Tracker</h2>
-                <p className="text-black ">Keep track of your inventory with ease.</p>
-              </div>
+        {/* Header */}
+        <header className="bg-indigo-800 py-4">
+          <div className="container mx-auto text-center">
+            <h1 className="text-4xl font-bold">
+              <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-600">Inventory Tracker</span>
+            </h1>
+          </div>
+        </header>
 
-              {/* Quick Actions */}
-              <div className="flex justify-around">
-                <div className="w-1/2">
-                  <Login />
-                </div>
-                <div className="w-1/2">
-                  <Signup />
-                </div>
+        {/* Main Content */}
+        <div className="container mx-auto mt-8 p-4">
+          <div className="bg-opacity-90 bg-gray-800 p-8 rounded-md shadow-md">
+
+            {/* Welcome Section */}
+            <div className="text-center mb-8">
+              <h1 className='text-white text-5xl font-bold mb-4'>
+                Transform Your Business with
+                <br />
+                <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-600">Inventory Tracker</span>
+              </h1>
+              <p className='text-white text-lg'>
+                Unlock the potential of your enterprise with our cutting-edge Inventory Tracker. Elevate efficiency, streamline processes, and safeguard your data with a suite designed for success.
+              </p>
+            </div>
+
+            {/* Quick Actions */}
+            <div className="flex justify-around">
+              <div className="w-1/2">
+                <Login />
+              </div>
+              <div className="w-1/2">
+                <Signup />
               </div>
             </div>
+
           </div>
         </div>
+
       </div>
     </section>
   );

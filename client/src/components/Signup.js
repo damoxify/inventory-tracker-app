@@ -42,14 +42,14 @@ function Signup() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center ">
+    <div className="min-h-screen flex items-center justify-center">
       <form onSubmit={handleSubmit} className="bg-black p-8 rounded-md shadow-md max-w-md w-full">
         <h1 className="text-4xl text-center mb-6 text-purple-700 font-bold">Sign up</h1>
 
         <div className="mb-4">
           <label className="block text-sm text-white mb-2">First Name</label>
           <input
-            className="w-full p-2 border border-purple-400 rounded-md focus:outline-none focus:border-purple-600"
+            className="w-full p-2 border border-purple-400 rounded-md text-black focus:outline-none focus:border-purple-600 focus:ring focus:ring-purple-300"
             placeholder="Enter your first name..."
             type="text"
             value={firstName}
@@ -61,7 +61,7 @@ function Signup() {
         <div className="mb-4">
           <label className="block text-sm text-white mb-2">Last Name</label>
           <input
-            className="w-full p-2 border border-purple-400 rounded-md focus:outline-none focus:border-purple-600"
+            className="w-full p-2 border border-purple-400 rounded-md text-black focus:outline-none focus:border-purple-600 focus:ring focus:ring-purple-300"
             placeholder="Enter your last name..."
             type="text"
             value={lastName}
@@ -73,7 +73,7 @@ function Signup() {
         <div className="mb-4">
           <label className="block text-sm text-white mb-2">Address</label>
           <input
-            className="w-full p-2 border border-purple-400 rounded-md focus:outline-none focus:border-purple-600"
+            className="w-full p-2 border border-purple-400 rounded-md text-black focus:outline-none focus:border-purple-600 focus:ring focus:ring-purple-300"
             placeholder="Enter your address..."
             type="text"
             value={address}
@@ -85,7 +85,7 @@ function Signup() {
         <div className="mb-4">
           <label className="block text-sm text-white mb-2">Birth Date</label>
           <input
-            className="w-full p-2 border border-purple-400 rounded-md focus:outline-none focus:border-purple-600"
+            className="w-full p-2 border border-purple-400 rounded-md text-black focus:outline-none focus:border-purple-600 focus:ring focus:ring-purple-300"
             type="date"
             value={birthDate}
             onChange={(e) => setBirthDate(e.target.value)}
@@ -100,7 +100,7 @@ function Signup() {
           Sign up
         </button>
         <div className='mt-4 text-center text-white'>
-          Already have an account? <Link to='/login' className='text-purple-700 font-bold'>Sign in here</Link>
+          Already have an account? <Link to='/' className='text-purple-700 font-bold'>Sign in here</Link>
         </div>
       </form>
     </div>
