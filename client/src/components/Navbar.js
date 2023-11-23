@@ -19,7 +19,6 @@ function NavBar() {
         <nav className="flex items-center space-x-4">
           <Link to="/" className="hover:underline">Home</Link>
           <Link to="/customers" className="hover:underline">Customers</Link>
-          {/* Add more navigation links as needed */}
         </nav>
       </div>
     </header>

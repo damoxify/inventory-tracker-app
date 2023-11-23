@@ -7,7 +7,7 @@ function Home() {
     <section className="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 bg-cover bg-center rounded-lg">
       <div className="relative bg-black  min-h-screen text-white">
 
-        {/* Header */}
+       {/* Header section */}
         <header className="bg-black py-4">
           <div className="container mx-auto text-center">
             <h1 className="text-4xl font-bold">
@@ -16,11 +16,11 @@ function Home() {
           </div>
         </header>
 
-        {/* Main Content */}
+         {/* Main Content  */}
         <div className="container mx-auto mt-8 p-4">
           <div className="bg-opacity-90 bg-gray-800 p-8 rounded-md shadow-md">
 
-            {/* Welcome Section */}
+            {/* Company Mission Section */}
             <div className="text-center mb-8">
               <h1 className='text-white text-5xl font-bold mb-4'>
                 Transform Your Business with
@@ -32,7 +32,7 @@ function Home() {
               </p>
             </div>
 
-            {/* Quick Actions */}
+            {/* Grid sections for forms */}
             <div className="flex justify-around">
               <div className="w-1/2">
                 <Login />
