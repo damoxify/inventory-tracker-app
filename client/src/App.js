@@ -6,10 +6,13 @@ import Home from './components/Home';
 import Products from './components/Products';
 import Signup from './components/Signup';
 import Customers from './components/Customers';
+import AnimatedCursor from "react-animated-cursor";
+
 
 function App() {
   return (
     <>
+      <AnimatedCursor innerSize={20} color="39, 217, 186" />
       <NavBar />
       <Routes>
         <Route path="/login" element={<Login />} />

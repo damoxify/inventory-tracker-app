@@ -5,10 +5,10 @@ import Signup from './Signup';
 function Home() {
   return (
     <section className="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 bg-cover bg-center rounded-lg">
-      <div className="relative bg-black bg-opacity-80 min-h-screen text-white">
+      <div className="relative bg-black  min-h-screen text-white">
 
         {/* Header */}
-        <header className="bg-indigo-800 py-4">
+        <header className="bg-black py-4">
           <div className="container mx-auto text-center">
             <h1 className="text-4xl font-bold">
               <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-600">Inventory Tracker</span>

@@ -4,7 +4,7 @@ import logo from '../components/logo.png'
 
 function NavBar() {
   return (
-    <header className="bg-purple-600 text-white py-4">
+    <header className="bg-purple-800 text-white py-4">
       <div className="container mx-auto flex items-center justify-between">
         <div>
           <Link to="/" className="flex items-center space-x-2">
