@@ -92,7 +92,7 @@ function Signup() {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
           />
-          {formik.touched.birthDate && formik.errors.joinDate && (
+          {formik.touched.joinDate && formik.errors.joinDate && (
             <p style={{ color: 'red' }}>{formik.errors.joinDate}</p>
           )}
         </div>

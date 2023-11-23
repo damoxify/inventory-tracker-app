@@ -2,6 +2,8 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy_serializer import SerializerMixin
+from sqlalchemy.orm import validates
+from sqlalchemy.exc import AssertionError
 
 metadata = MetaData(naming_convention={
     "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
@@ -27,6 +29,12 @@ class Product(db.Model, SerializerMixin):
             'price': self.price,
             'customer_id': self.customer_id,
         }
+    
+    @validates('product_name')
+    def validate_product_name(self, key, product_name):
+        if not product_name:
+            raise AssertionError('Product name cannot be empty')
+        return product_name
 
 class Customer(db.Model, SerializerMixin):
     __tablename__ = 'customers'
@@ -51,6 +59,12 @@ class Customer(db.Model, SerializerMixin):
             'products': [product.to_dict() for product in self.products],
             'reviews': [review.to_dict() for review in self.reviews],
         }
+    
+    @validates('customer_name')
+    def validate_customer_name(self, key, customer_name):
+        if not customer_name:
+            raise AssertionError('Customer name cannot be empty')
+        return customer_name
 
 class Review(db.Model, SerializerMixin):
     __tablename__ = 'reviews'
