@@ -7,6 +7,7 @@ import Products from './components/Products';
 import Signup from './components/Signup';
 import Customers from './components/Customers';
 import AnimatedCursor from "react-animated-cursor";
+import Footer from './components/Footer';
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/customers" element={<Customers />} />
       </Routes>
+      <Footer/>
     </>
   );
 }
